@@ -4,3 +4,6 @@ const cors = require('cors');
 const logger = require('morgan');
 const actionModel = require('./data/helpers/actionModel');
 const projectModel = require('./data/helpers/projectModel');
+
+//Instatiates a server object
+const server = express();
