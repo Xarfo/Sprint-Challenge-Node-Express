@@ -57,6 +57,19 @@ server.post('/projects', (req, res, next) => {
       })
    })
 
+//Project Request/Route Handlers Create Operation
+server.put('/projects', (req, res, next) => {
+    const { name, description, id } = req.body;
+    const updatedProject = { name, description };
+    projectModel.update(id, updatedProject)
+      .then(
+        res.status(200).json(updatedProject)
+      )
+      .catch(err => {
+        console.error(err);
+      });
+   });
+
 
 
 
@@ -70,5 +83,5 @@ server.post('/projects', (req, res, next) => {
 
 
 //Port & Port Listner
-const port = 7000 
-server.listen(port, () => console.log(`\n Listening on on port ${port} `   ))
+const port = 7000;
+server.listen(port, () => console.log(`\n Listening on on port ${port}`));
