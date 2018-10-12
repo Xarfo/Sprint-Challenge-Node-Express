@@ -19,10 +19,9 @@ server.get('/', (req, res) => {
     res.send('Test for root route')
 });
 
+//Project Routes
 
-
-//Project Request/Route Handlers
-
+//Project Request/Route Handlers Get
 server.get('/projects', (req, res) => {
     projectModel.get()
       .then(projects => {
@@ -34,7 +33,8 @@ server.get('/projects', (req, res) => {
    
    });
 
-   server.get('/projects/:id', (req, res) => {
+//Project Request/Route Handlers Get By Id
+server.get('/projects/:id', (req, res) => {
     projectModel.getProjectActions(req.params.id)
       .then(actions => {
         res.status(200).json(actions);
@@ -44,6 +44,18 @@ server.get('/projects', (req, res) => {
       });
    });
 
+//Project Request/Route Handlers Create Operation
+server.post('/projects', (req, res, next) => {
+    const { name, description, completed } = req.body;
+    const newProject = { name, description, completed };
+    projectModel.insert(newProject)
+      .then(
+        res.status(200).json(newProject)
+      )
+      .catch(err => {
+        console.error(err);
+      })
+   })
 
 
 
