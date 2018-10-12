@@ -23,15 +23,25 @@ server.get('/', (req, res) => {
 
 //Project Request/Route Handlers
 
-server.get('/projects', (req, res, next) => {
+server.get('/projects', (req, res) => {
     projectModel.get()
       .then(projects => {
         res.status(200).json(projects)
       })
       .catch(err => {
         res.status(500).json(`${err}: Information not available`);
-      })
+      });
    
+   });
+
+   server.get('/projects/:id', (req, res) => {
+    projectModel.getProjectActions(req.params.id)
+      .then(actions => {
+        res.status(200).json(actions);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
    });
 
 
