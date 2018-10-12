@@ -12,13 +12,11 @@ const server = express();
 //express.json returns json objects of the response
 //All global middlewares that will be used across enpoints must also be plugged into the server
 //cors and helmet middlewares are not used
-
 server.use(express.json(), logger('combined'), cors(), helmet());
 
 //Root Request/Route Handler
-
 server.get('/', (req, res) => {
-
+    res.send('Test for root route')
 });
 
 
@@ -35,7 +33,6 @@ server.get('/', (req, res) => {
 
 
 
-// Port & Port Listner
-const port = 7000
-   
+//Port & Port Listner
+const port = 7000 
 server.listen(port, () => console.log(`\n Listening on on port ${port} `   ))
