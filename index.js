@@ -14,3 +14,28 @@ const server = express();
 //cors and helmet middlewares are not used
 
 server.use(express.json(), logger('combined'), cors(), helmet());
+
+//Root Request/Route Handler
+
+server.get('/', (req, res) => {
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Port & Port Listner
+const port = 7000
+   
+server.listen(port, () => console.log(`\n Listening on on port ${port} `   ))
