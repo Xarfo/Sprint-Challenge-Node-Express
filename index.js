@@ -5,24 +5,24 @@ const logger = require('morgan');
 const actionModel = require('./data/helpers/actionModel');
 const projectModel = require('./data/helpers/projectModel');
 
-//Instatiates a server object
-const server = express();
+//Instatiates a server(app) object
+const app = express();
 
 //Third party middleware
 //express.json returns json objects of the response
-//All global middlewares that will be used across enpoints must also be plugged into the server
+//All global middlewares that will be used across enpoints must also be plugged into the app
 //cors and helmet middlewares are not used
-server.use(express.json(), logger('combined'), cors(), helmet());
+app.use(express.json(), logger('combined'), cors(), helmet());
 
 //Root Request/Route Handler
-server.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Test for root route')
 });
 
 //Project Routes
 
 //Project Request/Route Handlers Get
-server.get('/projects', (req, res) => {
+app.get('/projects', (req, res) => {
     projectModel.get()
       .then(projects => {
         res.status(200).json(projects)
@@ -34,10 +34,10 @@ server.get('/projects', (req, res) => {
    });
 
 //Project Request/Route Handlers Get By Id
-server.get('/projects/:id', (req, res) => {
-    projectModel.getProjectActions(req.params.id)
-      .then(actions => {
-        res.status(200).json(actions);
+app.get('/projects/:id', (req, res) => {
+    projectModel.get(req.params.id)
+      .then(projects => {
+        res.status(200).json(projects);
       })
       .catch(err => {
         res.status(500).json(err);
@@ -45,7 +45,7 @@ server.get('/projects/:id', (req, res) => {
    });
 
 //Project Request/Route Handlers Create Operation
-server.post('/projects', (req, res, next) => {
+app.post('/projects', (req, res, next) => {
     const { name, description, completed } = req.body;
     const newProject = { name, description, completed };
     projectModel.insert(newProject)
@@ -58,7 +58,7 @@ server.post('/projects', (req, res, next) => {
    })
 
 //Project Request/Route Handlers Create Operation
-server.put('/projects', (req, res, next) => {
+app.put('/projects', (req, res, next) => {
     const { name, description, id } = req.body;
     const updatedProject = { name, description };
     projectModel.update(id, updatedProject)
@@ -73,7 +73,18 @@ server.put('/projects', (req, res, next) => {
 
 
 
-
+   
+//Action Request/Route Handlers Get
+app.get('/actions', (req, res, next) => {
+    actionModel.get()
+      .then(actions => {
+        res.status(200).json(actions)
+      })
+      .catch(err => {
+        res.status(500).json(err)
+      })
+   
+   })
 
 
 
@@ -84,4 +95,4 @@ server.put('/projects', (req, res, next) => {
 
 //Port & Port Listner
 const port = 7000;
-server.listen(port, () => console.log(`\n Listening on on port ${port}`));
+app.listen(port, () => console.log(`\n Listening on on port ${port}`));

@@ -1,7 +1,7 @@
 {
   "name": "Sprint-Challenge-Node-Express",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/Xarfo/Sprint-Challenge-Node-Express.git",
   "author": "Abdul Ahmad",
   "license": "MIT",
