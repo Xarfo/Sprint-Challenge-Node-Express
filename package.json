@@ -6,7 +6,7 @@
   "author": "Abdul Ahmad",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon server.js"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
