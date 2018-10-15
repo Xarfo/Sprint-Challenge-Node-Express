@@ -61,14 +61,13 @@ app.post('/projects', (req, res) => {
 
 //Project Endpoint for Update Operation
 app.put('/projects/:id', (req, res) => {
-    const { name, description, id } = req.body;
     const updatedProject = { name, description };
     projectModel.update(req.params.id, updatedProject)
       .then(updatedProject => {
         res.status(200).json(updatedProject)
       })
       .catch(err => {
-        console.error(`${err} Cannot PUT`);
+        console.error(`Null`);
       });
    });
 
@@ -100,42 +99,40 @@ app.get('/actions', (req, res) => {
    });
 
 //Action Endpoint for Create Operation
-app.post('/actions', (req, res, next) => {
+app.post('/actions', (req, res) => {
     const { description, project_id, notes } = req.body;
-    const newPost = { description, project_id, notes };
-    actionModel.insert(newPost)
-      .then(
-        res.status(200).json(newPost)
-      )
+    const newAction = { description, project_id, notes };
+    actionModel.insert(newAction)
+      .then(newAction => {
+        res.status(200).json(newAction)
+      })
       .catch(err => {
-        console.error(err);
+        console.error(`${err} Cannot POST`);
       })
   })
   
 //Action Endpoint for Update Operation  
-app.put('/actions', (req, res, next) => {
-    const { description, id } = req.body;
-    const updatedAction = { description };
+app.put('/actions/:id', (req, res) => {
+    const updatedAction = { description, notes, completed };
     actionModel.update(id, updatedAction)
-      .then(
+      .then(updatedAction => {
         res.status(200).json(updatedAction)
-      )
-      .catch(err => {
-        console.error(err);
       })
-  })
+      .catch(err => {
+        console.error(`Null`);
+      });
+  });
   
 //Action Endpoint for Delete Operation  
-app.delete('/actions', (req, res, next) => {
-    const { id } = req.body;
-    actionModel.remove(id)
-      .then(
-        res.status(200).json(`Action #${id} has been deleted`)
+app.delete('/actions/:id', (req, res) => {
+    actionModel.remove(req.params.id)
+      .then(removedAction =>
+        res.status(200).json(removedAction)
       )
       .catch(err => {
-        console.error(err);
-      })
-  })   
+        console.error(e`${err}: Cannot DELETE`);
+      });
+  });   
 
 
 //Port & Port Listner
