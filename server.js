@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 //Project Routes
 
-//Project Request/Route Handlers Get
+//Project Endpoint for Get
 app.get('/projects', (req, res) => {
     projectModel.get()
       .then(projects => {
@@ -33,18 +33,19 @@ app.get('/projects', (req, res) => {
    
    });
 
-//Project Request/Route Handlers Get By Id
+//Project Endpoint for Get By Id
 app.get('/projects/:id', (req, res) => {
+    console.log(req.params); //Test for req.params shape
     projectModel.get(req.params.id)
       .then(projects => {
         res.status(200).json(projects);
       })
       .catch(err => {
-        res.status(500).json(err);
+        res.status(500).json(`${err}: Information not available`);
       });
    });
 
-//Project Request/Route Handlers Create Operation
+//Project Endpoint for Create Operation
 app.post('/projects', (req, res, next) => {
     const { name, description, completed } = req.body;
     const newProject = { name, description, completed };
@@ -54,10 +55,10 @@ app.post('/projects', (req, res, next) => {
       )
       .catch(err => {
         console.error(err);
-      })
-   })
+      });
+   });
 
-//Project Request/Route Handlers Create Operation
+//Project Endpoint for Update Operation
 app.put('/projects', (req, res, next) => {
     const { name, description, id } = req.body;
     const updatedProject = { name, description };
@@ -70,11 +71,19 @@ app.put('/projects', (req, res, next) => {
       });
    });
 
+  //Project Endpoint for Delete Operation
 
 
 
+
+ 
    
-//Action Request/Route Handlers Get
+
+
+
+
+
+//Action Endpoint for Get Operation
 app.get('/actions', (req, res, next) => {
     actionModel.get()
       .then(actions => {
